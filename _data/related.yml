@@ -1,5 +1,6 @@
-- post: DT
+- post: decision_tree
   related:
   - KNN
   - RF
-- post: Kmeans
+- post: K-means
+- post: KNN
