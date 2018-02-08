@@ -5,12 +5,13 @@ title: About
 
 <div style="font-size: 0.9rem; font-weight:300; line-height: 1.6rem;">
 
-안녕하세요. 반갑습니다. 현재 고려대학교 산업경영공학부에서 데이터마이닝 전공으로 석사과정 재학 중인 이기창이라고 합니다. 제 관심 분야는 다음과 같습니다.
+안녕하세요. 고려대학교 통계학과에 재학 중인 학부생 김강열이라고 합니다. 제 관심 분야는 아래와 같습니다.
 
 <p class="message" style="font-size: 0.9rem; font-weight: 700">
-Natural Language Processing, Linguistics, Machine Learning
+Machine Learning, Network Analysis, Bayesian Statistics
 </p>
 
-앞으로 공부하면서 자주 글 올리겠습니다. 궁금한 점이나 조언해주실 내용 있으시면 언제든지 연락주세요. 이메일, 깃허브, 페이스북, 링크드인 등 컨택포인트는 사이드바 중앙에 있습니다. 블로그 포스팅 하단에 질문할 수 있는 공간 또한 만들어뒀습니다. 감사합니다.
+이 공간을 통해서 제가 지금까지 배운 내용들을 잘 정리해 놓고 지나가다 방문하시는 분들의 비판이나
+가르침 역시 받으려고 합니다. 잘 부탁드립니다.
 
 </div>
