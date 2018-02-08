@@ -23,16 +23,16 @@ version: 1.0.0
 
 # About/contact
 author:
-  name: ratsgo
-  description: <strong>보물찾기</strong> 그리운 마을, 그 먼 바다에 이르기까지
-  gravatar: 0a638fc7996869b1b67fb90ccf77dcfe # md5 hash of your email address
+  name: Kangyeol-Kim
+  description: 
+  #gravatar: 0a638fc7996869b1b67fb90ccf77dcfe # md5 hash of your email address
   contact:
-    linkedin:  https://www.linkedin.com/in/gichanglee/
-    github:    https://github.com/ratsgo
-    facebook:  https://www.facebook.com/gichanglee.84
+    linkedin:  https://www.linkedin.com/in/kang-yeol-kim-251857138/
+    github:    https://github.com/Kangyeol-Kim
+    #facebook:  https://www.facebook.com/gichanglee.84
     #twitter:  <hide>
     #weibo:    <hide>
-    email:     mailto:gichang_lee@korea.ac.kr
+    email:     mailto:kkyy10000@likelion.org
 
 # Navigation (2nd level links supported)
 nav:
@@ -50,10 +50,10 @@ tag_page: '/blog/tags/'
 category_page: '/blog/categories/'
 
 hero:
-  image: https://ratsgo.github.io/public/img/picture.JPG
-  caption: Original Artwork &copy; Pablo Picasso. Girl before a Mirror. Boisgeloup, March 1932. Oil on canvas
+  image: https://kangyeol-kim.github.io/public/img/picture.JPG
+  caption: Original Artwork &copy; Rene Magritte, Ceci n'est pas une pipe, 1928
 
 # Puglins
 mathjax: true # whether support mathjax
-google_analytics_token: 'UA-93172815-1' # leave blank if you don't want google analytics
-disqus_short_name: 'ratsgo-github-io' # leave blank if you don't want disqus
+#google_analytics_token: 'UA-93172815-1' # leave blank if you don't want google analytics
+disqus_short_name: 'Kangyeol-Kim-github-io' # leave blank if you don't want disqus
