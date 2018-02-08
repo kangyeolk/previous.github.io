@@ -1,8 +1,8 @@
 # Site Info
-title: ratsgo's blog
-tagline: 'for textmining'
-description: 'blog for textmining'
-url: http://ratsgo.github.io
+title: Kangyeol-Kim Archive
+# tagline: 'for textmining'
+description: 'Archive for everyone'
+url: http://kangyeol-kim.github.io
 logo: '/public/logo.png'
 encoding: utf-8
 
@@ -15,7 +15,7 @@ kramdown:
 excerpt_separator: "<!-- more -->"
 sass:
   style: compressed
-  sass_dir: _scss    
+  sass_dir: _scss
 paginate: 5
 paginate_path: '/blog/page:num'
 permalink: pretty
@@ -36,13 +36,13 @@ author:
 
 # Navigation (2nd level links supported)
 nav:
-  Home:           
+  Home:
     - '/'
-  Contents:           
+  Contents:
     - '/blog/'
     - { Categories: '/blog/categories/' }
     - { Tags: '/blog/tags/' }
-  About:          
+  About:
     - '/about/'
 
 # Where are tags and categories displayed
@@ -57,4 +57,3 @@ hero:
 mathjax: true # whether support mathjax
 google_analytics_token: 'UA-93172815-1' # leave blank if you don't want google analytics
 disqus_short_name: 'ratsgo-github-io' # leave blank if you don't want disqus
-
