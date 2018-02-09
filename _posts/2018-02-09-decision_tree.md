@@ -7,7 +7,7 @@ tag: DT
 타겟 변수로 설정한 변수가 이산형(Discrete)이라면 **Classification tree** 라고 하며, 연속형(Continuous)이라면 **Regression tree** 라고 부릅니다.
 
 ## 용어 정의
-<a href="https://imgur.com/sZgYK1B"><img src="https://i.imgur.com/sZgYK1B.png" width="600px" title="source: imgur.com" /></a>
+<a href="https://imgur.com/sZgYK1B"><img src="https://i.imgur.com/sZgYK1B.png" width="600px" height="400px title="source: imgur.com" /></a>
 
 데이터가 k개의 변수와 하나의 결과인 $$D=(x_{1},...,x_{k},Y)$$와 같이 주어진다고 했을 때,
 먼저 tree 구조에서 사용되는 용어를 살펴보면:
@@ -18,10 +18,27 @@ tag: DT
 5. 가지(branch): root-terminal 연결된 마디
 6. 깊이(depth): root-terminal 중간마디들의 수
 
-## Decision Tree의 종류
+## Decision Tree의 형성
 
-위에서 언급했듯이 tree는 **Classification tree** / **Regression tree** 가 있으며, 두 개를 합쳐서 **CART(Classification And Regression Tree)**
-라는 말로 부른다. 
+tree의 형성과정은 가지의 분리(Split Rule)-분리 정지(Stop Rule)-가지치기(Pruning)인 크게 세 부분으로 나누어 집니다. 어떠한 기준을 가지고 가지를 정지 조건에 도달할 때까지 분리한 후에 overfitting을 방지하기 위해서 필요없는 가지를 처내는 것 입니다. 이러한 일련의 과정을 해주는 다양한 알고리즘들이 있습니다. 그 중 몇 가지만 살펴보겠습니다.
+
+* CART(Classification And Regression Tree) Algorithm
+* ID3(Iterative Dichotomiser 3)
+* C4.5 & C5.0
+
+사실 C4.5, C5.0은 ID3의 단점을 수정,보완한 알고리즘이기 때문에 자세하게는 CART와 C4.5,C5.0에 대해 살펴 보겠습니다. 하지만 그 전에 먼저 서로 다른 알고리즘에서 분리 기준으로 어떤 지표를 사용하는지 다루겠습니다.
+
+# Gini impurity(지니 불순도)
+Gini impurity는 CART알고리즘에서 사용되는 기준입니다. Gini impurity는 각 자식노드에서 계산된 후에 가중 평균 합을 해서 최종적으로 구해집니다. 기본적으로 Decision tree의 가지 분리 목적이 각 자식노드에 최대한 타겟 변수가 구분되게 분리시키는 것 입니다. 타겟 변수가 <1>, <2>로 두 가지 범주가 있다고 합시다. <1> 기준에서는 노드에 <1>만 있었으면 좋겠는데, <2>라는 불순도가 낀 것 입니다. 즉, $$p_{<2>}$$가 불순도인 셈이죠. 마찬가지로 <2>기준으로는 $$p_{<1>}$$이 불순도가 됩니다. 자기 빼고는 전부 불순도가 되는 것입니다. 그런데, 누구의 불순도가 더 신빙성있냐고 묻는 다면, <1>과 <2>의 비율을 고려해야 합니다. 왜냐하면 비율이 높은 쪽에 가중치를 더 높이주는 것이라고 생각하시면 됩니다.$$J$$개의 타겟 변수 범주가 있을 때, 각 노드의 불순도는 그래서 아래와 같이 구해집니다.
+
+$$ I_{G}(p)=\sum_{i=1}^{J}p_{i}\sum_{k \neq i}p_{k}=\sum_{i=1}^{J} p_{i}(1-p_{i})=\sum_{i=1}^{J}(p_{i}-p_{i}^{2})=
+  \sum_{i=1}^{J}p_{i}-\sum_{i=1}^{J} p_{i}^{2}=1-\sum_{i=1}^{J} p_{i}^{2}$$
+
+따라서 실제로 계산할 때는 마지막처럼 $$1-\sum_{i=1}^{J} p_{i}^{2}$$로 간단하게 구할 수 있습니다. 한편, 변수에 대해서는 
+
+
+## 복수의 Tree를 이용한 테크닉
+
 
 ## Structured Journalism ==> topic
 <a href="http://imgur.com/HqWB22Q"><img src="http://i.imgur.com/HqWB22Q.png" width="600px" title="source: imgur.com" /></a> 이미지 넣기
