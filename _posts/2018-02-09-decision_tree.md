@@ -47,12 +47,9 @@ $$ I_{G}(p)=\sum_{i=1}^{J}p_{i}\sum_{k \neq i}p_{k}=\sum_{i=1}^{J} p_{i}(1-p_{i}
 **Information gain** 은 C4.5, C5.0에서 사용되는 분리 기준으로 정보 이론에서의 **entropy** 를 기반으로 하는 분리 기준입니다. 먼저, $p_{1},...,p_{J}$를 각 클래스의
 확률이라고 한다면 이 때의 entropy는 아래와 같습니다:
 
-$$ H(T)=I_{E}(p_{1},...,p_{J})=-\sum_{i=1}^{J}p_{i}log_{2}p_{i}} $$
-
+$$H(T)=I_{E}(p_{1},...,p_{J})=-\sum_{i=1}^{J}p_{i}log_{2}p_{i}}$$
 여기서 Information gain은 원래의 부모 노드와 자식 노드들의 가중합 사이의 엔트로피의 차로써 구해진다, a를 분리 기준이라고 한다면:
-
 $$IG(T,a)[Information Gain] = H(T)[Entropy(parent)] - H(T|a)[Entropy(Children)]$$
-
 사실 부모 노드의 entropy는 같으므로 H(T|a)가 작은 쪽을 선택하면 됩니다. 다시 말해 entropy를 최소화하는 분리 기준을 선택하면 된다는 말이죠. 위와 같은 예시로 entropy 계산을 해봅시다.
 
 <a href="https://imgur.com/dJ3g1te"><img src="https://i.imgur.com/dJ3g1te.png" width="600px" height="200px" title="source: imgur.com" /></a>
