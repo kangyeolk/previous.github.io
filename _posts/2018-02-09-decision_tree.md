@@ -7,7 +7,7 @@ tag: DT
 타겟 변수로 설정한 변수가 이산형(Discrete)이라면 **Classification tree** 라고 하며, 연속형(Continuous)이라면 **Regression tree** 라고 부릅니다.
 
 ## 용어 정의
-<a href="https://imgur.com/sZgYK1B"><img src="https://i.imgur.com/sZgYK1B.png" width="600px" height="400px title="source: imgur.com" /></a>
+<a href="https://imgur.com/sZgYK1B"><img src="https://i.imgur.com/sZgYK1B.png" width="600px" height="400px" title="source: imgur.com" /></a>
 
 데이터가 k개의 변수와 하나의 결과인 $$D=(x_{1},...,x_{k},Y)$$와 같이 주어진다고 했을 때,
 먼저 tree 구조에서 사용되는 용어를 살펴보면:
@@ -34,7 +34,7 @@ Gini impurity는 CART알고리즘에서 사용되는 기준입니다. Gini impur
 $$ I_{G}(p)=\sum_{i=1}^{J}p_{i}\sum_{k \neq i}p_{k}=\sum_{i=1}^{J} p_{i}(1-p_{i})=\sum_{i=1}^{J}(p_{i}-p_{i}^{2})=
   \sum_{i=1}^{J}p_{i}-\sum_{i=1}^{J} p_{i}^{2}=1-\sum_{i=1}^{J} p_{i}^{2}$$
 
-따라서 실제로 계산할 때는 마지막처럼 $$1-\sum_{i=1}^{J} p_{i}^{2}$$로 간단하게 구할 수 있습니다. 한편, 변수에 대해서는 
+따라서 실제로 계산할 때는 마지막처럼 $$1-\sum_{i=1}^{J} p_{i}^{2}$$로 간단하게 구할 수 있습니다. 이러한 지니 불순도가 가장 낮아지는 변수-최적 분리점을 찾아서 그 기준으로 분리를 하면 됩니다. 범주형은 쉽게 계산되지만, 연속형 변수의 경우에는 분리점 몇개를 지정해서
 
 
 ## 복수의 Tree를 이용한 테크닉
