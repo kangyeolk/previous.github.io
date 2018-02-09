@@ -91,6 +91,28 @@ CART 알고리즘은 몇 가지 Stopping Rules들을 가지고 가지 분리를 
 ### C4.5 & C5.0
 
 **C4.5** 알고리즘의 목적은 위에서 언급한 Information gain을 최대화 시키는 Decision tree를 찾는 것 입니다. 또한 이 알고리즘은 tree를 만드는 과정을 종료한 후에
-가지치기(pruning)를 하는 특징을 가집니다. 
+가지치기(pruning)를 하는 특징을 가집니다.
+
+```
+## C5.0 Algorithm
+library(C50)
+data(iris)
+
+# Data Shuffle
+set.seed(123)
+g <- runif(nrow(iris))
+irisr <- iris[order(g),]
+
+# Classification tree with C5.0
+m1 <- C5.0(irisr[1:100, -5], irisr[1:100, 5])
+summary(m1)
+
+# Predict
+p1 <- predict(m1, irisr[101:150,])
+table(irisr[101:150,5], p1)
+
+#
+plot(m1)
+```
 
 ## 복수의 Tree를 이용한 테크닉
