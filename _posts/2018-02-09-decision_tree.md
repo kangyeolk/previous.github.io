@@ -39,7 +39,7 @@ $$ I_{G}(p)=\sum_{i=1}^{J}p_{i}\sum_{k \neq i}p_{k}=\sum_{i=1}^{J} p_{i}(1-p_{i}
 
 <a href="https://imgur.com/dJ3g1te"><img src="https://i.imgur.com/dJ3g1te.png" width="600px" height="200px" title="source: imgur.com" /></a>
 
-위의 그림에서 $$R1$$의 지니 불순도는 $$I(R1)=1-\{(4/6)^{2}+(2/6)^{2}\}=0.444$$이고, $$R2$$의 지니 불순도는 $$I(R2)=1-\{(3/4)^{2}+(1/4)^{2}\}=0.375$$이다.
+위의 그림에서 $$R1$$의 지니 불순도는 $$I(R1)=1-\{(\frac{4}{6})^{2}+(\frac{2}{6})^{2}\}=0.444$$이고, $$R2$$의 지니 불순도는 $$I(R2)=1-\{(\frac{3}{4})^{2}+(\frac{1}{4})^{2}\}=0.375$$이다.
 따라서 이 분리 기준의 최종적인 지니 불순도를 구하면, $$(6/10) \times I(R1) + (4/10) \times I(R2) = 0.4164$$로 계산됩니다.
 
 ### Information gain
@@ -163,20 +163,47 @@ $$\alpha^{(1)}=0$$이라 하자.
 
 #### Best $$\alpha$$값 찾기
 
-* $$\alpha$$   
-
-
-
+* $$ \alpha^{(0)}=0,\alpha^{(1)}=1/8,\alpha^{(2)}=1/8,\alpha^{(3)}=1/4 $$가 우리가 구한 $$\alpha$$값들 입니다.
+* 위에서 언급했듯이 목표는 Cost-Complexity function을 최소화하는 $$T$$를 찾는 겁니다.
+  - $$0 \leq \alpha < 1/8$$, $$T_{1}$$이 best입니다.
+  - $$\alpha = 1/8$$, $$T_{2}$$가 best입니다.
+  - $$1/8 < \alpha < 1/4/$$, $$T_{3}$$가 best입니다.
+  - $$1/4 \leq \alpha$$, $$T_{3}$$가 best입니다.
+* 왜 위와 같은 결과가 나오냐면 $$0 \leq \alpha < 1/8$$라는 범위에서는 $$T_{t}=T_{t_{2}}$$이라고 할 때, $$\alpha \leq \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$가
+되고, $$T_{t}=T_{t_{1}}$$이라고 할 때, $$\alpha > \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$이기 때문이다. 이 점에서 위와 같은 범위에서 $$T_{t_{1}}$$이 $$T_{t_{2}}$$보다 좋은 것은 명확하다. 마찬가지로 $$T_{t_{1}}$$이 $$T_{t_{3}}$$보다 더 좋은 것도 명확하다. 즉, 해당 T로 인한 $$g(t)$$의 최소값이 지정된 $$\alpha$$보다 커지면 좋은 가지치기라고 할 수 없다.       
 
 ### C4.5 & C5.0
 
-**C5.0** 알고리즘은 Information gain을 분리 기준으로 사용합니다. CART와 달리 binary tree 혹은 multi branches tree를 만들어 냅니다.
+**C5.0** 알고리즘은 Information gain을 분리 기준으로 사용합니다. CART와 달리 binary tree 혹은 multi branches tree를 만들어 냅니다. 다음에..
 
 #### Pruning
 
-Binomial Confidence Limit 사용한다.
+Binomial Confidence Limit 사용한다. 다음에..
+
+## Code
+
+R로 간단하게 Algorithm을 시행해 보았습니다.
+```{r}
+## CART Algorithm
+library(rpart)
+data(iris)
+
+#####################################################################################################
+# rpart function option   
+# minsplit : split하기 위한 최소 관측값 수 (defualt=20)
+# minbucket : 자식마디에 있어야 하는 최소 관측값 수  (defualt= round(minsplit/3))
+# cp(complexity parameter) : 위에서 언급한 알파값입니다, 높으면 간단한 tree, 낮으면 복잡한 tree가 됩니다.
+# xval : cross-validation fold 갯수(default=10)
+# maxdepth : 최대 깊이 (default=30)
+#### rpart 함수 참고 : https://cran.r-project.org/web/packages/rpart/rpart.pdf #######################
+
+
+
 
 ```
+
+
+```{r}
 ## C5.0 Algorithm
 library(C50)
 data(iris)
@@ -199,3 +226,9 @@ plot(m1)
 ```
 
 ## 복수의 Tree를 이용한 테크닉
+
+앙상블(Ensemble)이라는 방법은 간단하게 말해 모델 여러 개를 사용해서 최종적인 예측 결과를 내는 것을 의미합니다. (앙상블의 방법에는 배깅(Bagging)과 부스팅(Boosting)이
+있는데, 이에 대해서는 다른 글에서 다루겠습니다.) Decision tree 모델을 앙상블을 통해서 더 좋은 결과를 내게 하는 방법론은 여러가지 있습니다.
+
+* Boosted trees : Adaboost가 있습니다(다른 글에서 다루겠습니다.)
+* Bagged decision trees : training 데이터에서 반복해서 표본을 추출해서 복수의 tree 모델을 만들고, 이러한 tree들로 투표 혹은 평균을 내서 결론을 내는 방법입니다.(Random forest)
