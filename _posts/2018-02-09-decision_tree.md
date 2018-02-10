@@ -51,8 +51,7 @@ $$H(T)=I_{E}(p_{1},...,p_{J}) = - \sum_{i=1}^{J} p_{i} \log_{2} p_{i}$$
 
 여기서 Information gain은 원래의 부모 노드와 자식 노드들의 가중합 사이의 엔트로피의 차로써 구해진다, a를 분리 기준이라고 한다면:
 
-$$IG(T,a)[Information \ Gain] = H(T)[Entropy(parent)] - H(T|a)[Entropy(Children)]$$
-
+$$IG(T,a)[Information \ Gain] = H(T)[Entropy(parent)] - H(T|a)[Entropy(Children)]$$ </br>
 사실 부모 노드의 entropy는 같으므로 H(T|a)가 작은 쪽을 선택하면 됩니다. 다시 말해 entropy를 최소화하는 분리 기준을 선택하면 된다는 말이죠. 위와 같은 예시로 entropy 계산을 해봅시다.
 
 <a href="https://imgur.com/dJ3g1te"><img src="https://i.imgur.com/dJ3g1te.png" width="600px" height="200px" title="source: imgur.com" /></a>
@@ -69,6 +68,8 @@ $$IG(T,a)[Information \ Gain] = H(T)[Entropy(parent)] - H(T|a)[Entropy(Children)
 ## Decision Tree Learning Algorithm
 
 ### CART(Classification And Regression Tree)
+
+#### Split Rule
 
 알고리즘 아래와 같은 순서로 진행됩니다.
 
@@ -88,10 +89,66 @@ CART 알고리즘은 몇 가지 Stopping Rules들을 가지고 가지 분리를 
 * 노드의 사이즈가 사용자가 지정한 최소 사이즈에 도달했을 때.
 * 노드의 분리로 인한 불순도 감소량이 사용자 지정 값보다 작을 때
 
+#### Pruning
+
+CART는 Cost-Complexity Pruning이라는 방법으로 가지 치기를 합니다. 이 방법은 Cost-Complexity function을 최적화 시키는 나무를 찾아가는 것 입니다.
+
+$$Cost-Complexity \ function: \ R_{\alpha}(T)=R(T)+\alpha|f(T)|$$
+
+로 정의 되는데, 여기서 각각의 term의 의미는 아래와 같습니다.
+
+* $$R(T)=\sum_{t \in f(T)} r(t)p(t) = \sum_{t \in f(T)}R(t)$$으로 각 노드의 misclassification errors의 합을 의미합니다. 즉, training error를 의미하죠.
+  * $$r(t)=1-max_{k}p(C_{k})$$
+  * $$p(t)=\frac{n(t)}{n}$$
+* f(T)는 tree T의 노드들의 집합을 구하는 funtion입니다.
+* $$\alpha$$는 Regularization parameter 입니다.
+* (부가 정의) $$T_{t}$$를 t가 root인 sub-tree라고 하고, $$T-T_{t}$$를 tree(T)에서 subtree($$T_{t}$$)를 제거한거라고 정의합니다(노드 t는 제외).
+* (부가 정의) $$R_{t}$$= node t에서의 training error
+
+<a href="https://imgur.com/4zGJBOt"><img src="https://i.imgur.com/4zGJBOt.png" title="source: imgur.com" /></a>
+
+여기서 T에서 subtree $$T_{t}$$를 가지치기하는 경우를 생각해 봅시다. pruning하기 전후의 Cost-Complexity function을 비교해야 합니다: $$R_{\alpha}(T-T_{t})-R_{\alpha}(T)$$
+pruning 한 후와 그 전의 Cost-Complexity의 차이를 계산해 보면-그림을 보시면서 계산하면 식 이해가 편하십니다:)
+
+$$R_{\alpha}(T-T_{t})-R_{\alpha}(T)=R(T-T_{t})-R(T)+\alpha(|f(T-T_{t})|-f(T))=R(t)-R(T_{t})+\alpha(1-|f(T_{t})|)$$
+
+$$R(t)-R(T_{t})+\alpha(1-|f(T_{t})|)>0$$이라면 즉, $$\alpha < \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$이라면 pruning 후의 Cost-Complexity가 더 높으므로 좋지 않고,
+$$R(t)-R(T_{t})+\alpha(1-|f(T_{t})|)<0$$이라면 즉, $$\alpha > \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$이라면 pruning 후의 Cost-Complexity가 낮으므로 좋습니다.
+그리고 구체적인 알고리즘은 Cost-Complexity를 계속 줄여가는 방향으로 진행됩니다.
+
+1. Initialization $$T^{1}$$를 $$\alpha^{1}=0$$일때 얻어질 tree라 하자. i=1부터 해서
+2. $$g_{i}(t)=\frac{R(t)-R(T_{t}^{i})}{|f(T_{t}^{i})|-1}$$를 최소화하는 노드 $$t \in T^{i}$$를 선택한 후에
+$$\alpha^{i+1}=g_{i}(t_{i})$$라 하고 T^{i+1}=T^{i}-T_{t_{i}}^{i}로 새로 구합니다.
+3. Output으로 sequence of trees T^{1} \supset T^{2} \supset ... \supset \{root\}와 sequence of parameters \alpha^{1} \leq \alpha^{2} \leq ... \leq 가 나옵니다.
+4. \alpha의 값을 sequence 중에서 cross validation으로 구해줍니다.
+
+$$g_{i}(t)$$를 최소화하는 노드 t를 고르는 것은 곧, Cost-Complexity가 가장 많이 줄어들게 하는 노드 t를 고르는 것과 같습니다. 아래에서 예시를 하나 보시죠.
+
+<a href="https://imgur.com/zZv6yDr"><img src="https://i.imgur.com/zZv6yDr.png" title="source: imgur.com" /></a>
+
+세 개의 노드 $$t_{1}, t_{2}, t_{3}$$에 대해서 값을 계산해 봅시다.
+
+#### Iteration 1
+$$\alpha^{(1)}=0$$이라 하자.
+
+|   t    |   $$R(t)$$    | $$R(T_{t})$$  | $$g(t)$$ 8
+| :-----:  | :-----: | :-----: | :-----: |
+| $$t_{1}$$  |  \frac{8}{16} \cdot \frac{16}{16} |  0   | $$\frac{8/16-0}{4-1}=\frac{1}{6}$$ |
+| $$t_{2}$$  |  \frac{4}{12} \cdot \frac{12}{16} |  0   | $$\frac{4/16-0}{3-1}=\frac{1}{8}$$ |
+| $$t_{3}$$  |  \frac{2}{6} \cdot \frac{6}{16}   |  0   | $$\frac{2/16-0}{3-1}=\frac{1}{8}$$ |
+
+* $$ g(t_{2})=g(t_{3}) $$이고 이렇게 같을 때는 더 깊이 있는 노드를 선택하게 됩니다.($$g$$)
+
+
+
+
 ### C4.5 & C5.0
 
-**C4.5** 알고리즘의 목적은 위에서 언급한 Information gain을 최대화 시키는 Decision tree를 찾는 것 입니다. 또한 이 알고리즘은 tree를 만드는 과정을 종료한 후에
-가지치기(pruning)를 하는 특징을 가집니다.
+**C5.0** 알고리즘은 Information gain을 분리 기준으로 사용합니다. CART와 달리 binary tree 혹은 multi branches tree를 만들어 냅니다.
+
+#### Pruning
+
+Binomial Confidence Limit 사용한다.
 
 ```
 ## C5.0 Algorithm
