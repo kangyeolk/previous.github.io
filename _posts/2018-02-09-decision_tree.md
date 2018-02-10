@@ -49,9 +49,10 @@ $$ I_{G}(p)=\sum_{i=1}^{J}p_{i}\sum_{k \neq i}p_{k}=\sum_{i=1}^{J} p_{i}(1-p_{i}
 
 $$H(T)=I_{E}(p_{1},...,p_{J}) = - \sum_{i=1}^{J} p_{i} \log_{2} p_{i}$$
 
-여기서 Information gain은 원래의 부모 노드와 자식 노드들의 가중합 사이의 엔트로피의 차로써 구해진다, a를 분리 기준이라고 한다면:
+여기서 Information gain은 원래의 부모 노드와 자식 노드들의 가중합 사이의 엔트로피의 차로써 구해진다, a를 분리 기준이라고 한다면,
 
-$$IG(T,a)[Information \ Gain] = H(T)[Entropy(parent)] - H(T|a)[Entropy(Children)]$$ </br>
+$$IG(T,a)[Information \ Gain] = H(T)[Entropy(parent)] - H(T|a)[Entropy(Children)]$$
+
 사실 부모 노드의 entropy는 같으므로 H(T|a)가 작은 쪽을 선택하면 됩니다. 다시 말해 entropy를 최소화하는 분리 기준을 선택하면 된다는 말이죠. 위와 같은 예시로 entropy 계산을 해봅시다.
 
 <a href="https://imgur.com/dJ3g1te"><img src="https://i.imgur.com/dJ3g1te.png" width="600px" height="200px" title="source: imgur.com" /></a>
@@ -98,12 +99,12 @@ $$Cost-Complexity \ function: \ R_{\alpha}(T)=R(T)+\alpha|f(T)|$$
 로 정의 되는데, 여기서 각각의 term의 의미는 아래와 같습니다.
 
 * $$R(T)=\sum_{t \in f(T)} r(t)p(t) = \sum_{t \in f(T)}R(t)$$으로 각 노드의 misclassification errors의 합을 의미합니다. 즉, training error를 의미하죠.
-  * $$r(t)=1-max_{k}p(C_{k})$$
-  * $$p(t)=\frac{n(t)}{n}$$
-* f(T)는 tree T의 노드들의 집합을 구하는 funtion입니다.
+  - $$r(t)=1-max_{k}p(C_{k})$$
+  - $$p(t)=\frac{n(t)}{n}$$
+* f(T)는 tree T의 terminal 노드들의 집합을 구하는 funtion입니다.
 * $$\alpha$$는 Regularization parameter 입니다.
 * (부가 정의) $$T_{t}$$를 t가 root인 sub-tree라고 하고, $$T-T_{t}$$를 tree(T)에서 subtree($$T_{t}$$)를 제거한거라고 정의합니다(노드 t는 제외).
-* (부가 정의) $$R_{t}$$= node t에서의 training error
+* (부가 정의) $$R(t)$$= node t에서의 training error
 
 <a href="https://imgur.com/4zGJBOt"><img src="https://i.imgur.com/4zGJBOt.png" title="source: imgur.com" /></a>
 
@@ -118,13 +119,14 @@ $$R(t)-R(T_{t})+\alpha(1-|f(T_{t})|)<0$$이라면 즉, $$\alpha > \frac{R(t)-R(T
 
 1. Initialization $$T^{1}$$를 $$\alpha^{1}=0$$일때 얻어질 tree라 하자. i=1부터 해서
 2. $$g_{i}(t)=\frac{R(t)-R(T_{t}^{i})}{|f(T_{t}^{i})|-1}$$를 최소화하는 노드 $$t \in T^{i}$$를 선택한 후에
-$$\alpha^{i+1}=g_{i}(t_{i})$$라 하고 T^{i+1}=T^{i}-T_{t_{i}}^{i}로 새로 구합니다.
-3. Output으로 sequence of trees T^{1} \supset T^{2} \supset ... \supset \{root\}와 sequence of parameters \alpha^{1} \leq \alpha^{2} \leq ... \leq 가 나옵니다.
-4. \alpha의 값을 sequence 중에서 cross validation으로 구해줍니다.
+$$\alpha^{i+1}=g_{i}(t_{i})$$라 하고 $$T^{i+1}=T^{i}-T_{t_{i}}^{i}$$로 새로 구합니다.
+3. Output으로 sequence of trees $$T^{1} \supset T^{2} \supset ... \supset \{root\}$$와 sequence of parameters $$\alpha^{1} \leq \alpha^{2} \leq ... \leq $$가
+나옵니다.
+4. $$\alpha$$의 값을 sequence 중에서 cross validation으로 구해줍니다.
 
 $$g_{i}(t)$$를 최소화하는 노드 t를 고르는 것은 곧, Cost-Complexity가 가장 많이 줄어들게 하는 노드 t를 고르는 것과 같습니다. 아래에서 예시를 하나 보시죠.
 
-<a href="https://imgur.com/zZv6yDr"><img src="https://i.imgur.com/zZv6yDr.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/zZv6yDr"><img src="https://i.imgur.com/zZv6yDr.png" width="600px" height="300px" title="source: imgur.com" /></a>
 
 세 개의 노드 $$t_{1}, t_{2}, t_{3}$$에 대해서 값을 계산해 봅시다.
 
@@ -133,11 +135,35 @@ $$\alpha^{(1)}=0$$이라 하자.
 
 |   t    |   $$R(t)$$    | $$R(T_{t})$$  | $$g(t)$$ 8
 | :-----:  | :-----: | :-----: | :-----: |
-| $$t_{1}$$  |  \frac{8}{16} \cdot \frac{16}{16} |  0   | $$\frac{8/16-0}{4-1}=\frac{1}{6}$$ |
-| $$t_{2}$$  |  \frac{4}{12} \cdot \frac{12}{16} |  0   | $$\frac{4/16-0}{3-1}=\frac{1}{8}$$ |
-| $$t_{3}$$  |  \frac{2}{6} \cdot \frac{6}{16}   |  0   | $$\frac{2/16-0}{3-1}=\frac{1}{8}$$ |
+| $$t_{1}$$  |  $$\frac{8}{16} \cdot \frac{16}{16}$$ |  0   | $$\frac{8/16-0}{4-1}=\frac{1}{6}$$ |
+| $$t_{2}$$  |  $$\frac{4}{12} \cdot \frac{12}{16}$$ |  0   | $$\frac{4/16-0}{3-1}=\frac{1}{8}$$ |
+| $$t_{3}$$  |  $$\frac{2}{6} \cdot \frac{6}{16}$$   |  0   | $$\frac{2/16-0}{2-1}=\frac{1}{8}$$ |
 
-* $$ g(t_{2})=g(t_{3}) $$이고 이렇게 같을 때는 더 깊이 있는 노드를 선택하게 됩니다.($$g$$)
+* $$ g(t_{2})=g(t_{3}) $$이고 이렇게 같을 때는 더 깊이 있는 노드를 선택하게 됩니다.(여기선 $$g(t_{3})$$)
+* $$t_{3}$$에서 가지치기 하고, $$\alpha^{(2)}=1/8$$로 둡니다.
+
+<a href="https://imgur.com/22YnoE2"><img src="https://i.imgur.com/22YnoE2.png" width="600px" height="200px" title="source: imgur.com" /></a>
+
+
+#### Iteration 2
+|   t    |   $$R(t)$$    | $$R(T_{t})$$  | $$g(t)$$ 8
+| :-----:  | :-----: | :-----: | :-----: |
+| $$t_{1}$$  |  $$\frac{8}{16} \cdot \frac{16}{16}$$ |  $$\frac{2}{16}$$   | $$\frac{8/16-2/16}{3-1}=\frac{6}{32}$$ |
+| $$t_{2}$$  |  $$\frac{4}{12} \cdot \frac{12}{16}$$ |  $$\frac{2}{16}$$   | $$\frac{4/16-2/16}{2-1}=\frac{1}{8}$$ |
+
+* $$t_{2}$$에서 $$g(t_{2})$$가 최소가 된다.
+* $$t_{2}$$에서 가지치기합니다. $$\alpha^{(3)}=1/8$$로 둡니다.
+
+<a href="https://imgur.com/NpbYLTb"><img src="https://i.imgur.com/NpbYLTb.png" width="600px" height="200px" title="source: imgur.com" /></a>
+
+#### Iteration 3
+
+* $$\alpha^{(4)}=g(t_{1})=\frac{8/16-4/16}{2-1}=\frac{1}{4}$$
+
+
+#### Best $$\alpha$$값 찾기
+
+* $$\alpha$$   
 
 
 
