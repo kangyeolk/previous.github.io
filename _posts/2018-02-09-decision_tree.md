@@ -51,9 +51,9 @@ $$H(T)=I_{E}(p_{1},...,p_{J}) = - \sum_{i=1}^{J} p_{i} \log_{2} p_{i}$$
 
 여기서 Information gain은 원래의 부모 노드와 자식 노드들의 가중합 사이의 엔트로피의 차로써 구해진다, a를 분리 기준이라고 한다면,
 
-$$IG(T,a)[Information \ Gain] = H(T)[Entropy(parent)] - H(T|a)[Entropy(Children)]$$
+$$IG(T,a)\{Information \ Gain\} = H(T)\{Entropy(parent)\} - H(T|a)\{Entropy(Children)\}$$
 
-사실 부모 노드의 entropy는 같으므로 H(T|a)가 작은 쪽을 선택하면 됩니다. 다시 말해 entropy를 최소화하는 분리 기준을 선택하면 된다는 말이죠. 위와 같은 예시로 entropy 계산을 해봅시다.
+사실 부모 노드의 entropy는 같으므로 $$H(T|a)$$가 작은 쪽을 선택하면 됩니다. 다시 말해 entropy를 최소화하는 분리 기준을 선택하면 된다는 말이죠. 위와 같은 예시로 entropy 계산을 해봅시다.
 
 <a href="https://imgur.com/dJ3g1te"><img src="https://i.imgur.com/dJ3g1te.png" width="600px" height="200px" title="source: imgur.com" /></a>
 
@@ -99,8 +99,8 @@ $$Cost-Complexity \ function: \ R_{\alpha}(T)=R(T)+\alpha|f(T)|$$
 로 정의 되는데, 여기서 각각의 term의 의미는 아래와 같습니다.
 
 * $$R(T)=\sum_{t \in f(T)} r(t)p(t) = \sum_{t \in f(T)}R(t)$$으로 각 노드의 misclassification errors의 합을 의미합니다. 즉, training error를 의미하죠.
-  - $$r(t)=1-max_{k}p(C_{k})$$
-  - $$p(t)=\frac{n(t)}{n}$$
+  - $$r(t)=1-max_{k}p(C_{k})$$로 가장 많은 비율의 범주를 제외한 나머지의 비율
+  - $$p(t)=\frac{n(t)}{n}$$로 #(노드의 데이터)/#(전체 데이터)
 * f(T)는 tree T의 terminal 노드들의 집합을 구하는 funtion입니다.
 * $$\alpha$$는 Regularization parameter 입니다.
 * (부가 정의) $$T_{t}$$를 t가 root인 sub-tree라고 하고, $$T-T_{t}$$를 tree(T)에서 subtree($$T_{t}$$)를 제거한거라고 정의합니다(노드 t는 제외).
@@ -142,11 +142,11 @@ $$\alpha^{(1)}=0$$이라 하자.
 * $$ g(t_{2})=g(t_{3}) $$이고 이렇게 같을 때는 더 깊이 있는 노드를 선택하게 됩니다.(여기선 $$g(t_{3})$$)
 * $$t_{3}$$에서 가지치기 하고, $$\alpha^{(2)}=1/8$$로 둡니다.
 
-<a href="https://imgur.com/22YnoE2"><img src="https://i.imgur.com/22YnoE2.png" width="600px" height="200px" title="source: imgur.com" /></a>
+<a href="https://imgur.com/22YnoE2"><img src="https://i.imgur.com/22YnoE2.png" width="500px" height="200px" title="source: imgur.com" /></a>
 
 
 #### Iteration 2
-|   t    |   $$R(t)$$    | $$R(T_{t})$$  | $$g(t)$$ 8
+|   t    |   $$R(t)$$    | $$R(T_{t})$$  | $$g(t)$$ |
 | :-----:  | :-----: | :-----: | :-----: |
 | $$t_{1}$$  |  $$\frac{8}{16} \cdot \frac{16}{16}$$ |  $$\frac{2}{16}$$   | $$\frac{8/16-2/16}{3-1}=\frac{6}{32}$$ |
 | $$t_{2}$$  |  $$\frac{4}{12} \cdot \frac{12}{16}$$ |  $$\frac{2}{16}$$   | $$\frac{4/16-2/16}{2-1}=\frac{1}{8}$$ |
@@ -154,7 +154,7 @@ $$\alpha^{(1)}=0$$이라 하자.
 * $$t_{2}$$에서 $$g(t_{2})$$가 최소가 된다.
 * $$t_{2}$$에서 가지치기합니다. $$\alpha^{(3)}=1/8$$로 둡니다.
 
-<a href="https://imgur.com/NpbYLTb"><img src="https://i.imgur.com/NpbYLTb.png" width="600px" height="200px" title="source: imgur.com" /></a>
+<a href="https://imgur.com/NpbYLTb"><img src="https://i.imgur.com/NpbYLTb.png" width="400px" height="200px" title="source: imgur.com" /></a>
 
 #### Iteration 3
 
@@ -170,7 +170,7 @@ $$\alpha^{(1)}=0$$이라 하자.
   - $$1/8 < \alpha < 1/4/$$, $$T_{3}$$가 best입니다.
   - $$1/4 \leq \alpha$$, $$T_{3}$$가 best입니다.
 * 왜 위와 같은 결과가 나오냐면 $$0 \leq \alpha < 1/8$$라는 범위에서는 $$T_{t}=T_{t_{2}}$$이라고 할 때, $$\alpha \leq \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$가
-되고, $$T_{t}=T_{t_{1}}$$이라고 할 때, $$\alpha > \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$이기 때문이다. 이 점에서 위와 같은 범위에서 $$T_{t_{1}}$$이 $$T_{t_{2}}$$보다 좋은 것은 명확하다. 마찬가지로 $$T_{t_{1}}$$이 $$T_{t_{3}}$$보다 더 좋은 것도 명확하다. 즉, 해당 T로 인한 $$g(t)$$의 최소값이 지정된 $$\alpha$$보다 커지면 좋은 가지치기라고 할 수 없다.       
+되고, $$T_{t}=T_{t_{1}}$$이라고 할 때, $$\alpha > \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$이기 때문이다. 이 점에서 위와 같은 범위에서 $$T_{t_{1}}$$이 $$T_{t_{2}}$$보다 좋은 것은 명확하다. 마찬가지로 $$T_{t_{1}}$$이 $$T_{t_{3}}$$보다 더 좋은 것도 명확하다. 즉, 해당 T로 인한 $$g(t)$$의 최소값이 지정된 $$\alpha$$보다 커지면 좋은 가지치기라고 할 수 없다.
 
 ### C4.5 & C5.0
 
@@ -197,11 +197,22 @@ data(iris)
 # maxdepth : 최대 깊이 (default=30)
 #### rpart 함수 참고 : https://cran.r-project.org/web/packages/rpart/rpart.pdf #######################
 
+# Basic model
+model.1 <- rpart(Species~.,data=iris, minsplit=13, minbucket=8, cp=0.003)
+prp(model.1, type=4, extra=2, digits=3)
+model.2 <- rpart(Species~.,data=iris, xval=8, maxdepth=6)
+prp(model.2, type=2, extra=2, digits=3)
 
+# cp 값은 임의로 정하기 보다는 모델 내에 이미 pruning해보고 에러 값이 저장되어 있습니다. 이 값으로 cp를 사용하는 것이 좋습니다.
 
+model.2$cptable # 알파 값 조정
 
+prune_model.2 <- prune(model.2, cp=model.2$cptable[which.min(model.2$cptable[,"xerror"])], "CP")
+prp(prune_model.2, type=4,extra=2,digits=3)
+
+pred <- predict(prune_model.2, iris[,-5], type="class")
+confusionMatrix(prune_model.2, iris[,5])
 ```
-
 
 ```{r}
 ## C5.0 Algorithm
