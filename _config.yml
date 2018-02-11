@@ -24,7 +24,7 @@ version: 1.0.0
 # About/contact
 author:
   name: Kangyeol-Kim
-  description: 
+  description:
   #gravatar: 0a638fc7996869b1b67fb90ccf77dcfe # md5 hash of your email address
   contact:
     linkedin:  https://www.linkedin.com/in/kang-yeol-kim-251857138/
@@ -56,4 +56,4 @@ hero:
 # Puglins
 mathjax: true # whether support mathjax
 #google_analytics_token: 'UA-93172815-1' # leave blank if you don't want google analytics
-disqus_short_name: 'Kangyeol-Kim-github-io' # leave blank if you don't want disqus
+disqus_short_name: 'https-kangyeol-kim-github-io' # leave blank if you don't want disqus

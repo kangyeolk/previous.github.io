@@ -1,7 +1,7 @@
-# ratsgo's blog
+# Blog for ML/DL/Network
 
-안녕하세요, 블로그를 운영 중인 고려대 산업경영공학부 석사과정 재학 중인 이기창이라고 합니다. 제 컨택포인트는 아래와 같습니다.
+안녕하세요, 블로그를 운영 중인 고려대 통계학과 학부생 김강열입니다. 이메일과 블로그 주소는 아래와 같습니다.
 
-E-mail : gichang_lee@korea.ac.kr
+E-mail : kkyy10000@likelion.org
 
-blog : https://ratsgo.gitgub.io
+blog : https://kangyeol-kim.github.io
