@@ -6,7 +6,7 @@ tag: DT
 이번 글에서는 **Decision tree** 에 대해서 다루겠습니다. tree라는 말은 이 구조가 하나의 root를 시작으로 branch를 뻗어 가는 구조라는 뜻에서 나왔습니다. 우리가
 타겟 변수로 설정한 변수가 이산형(Discrete)이라면 **Classification tree** 라고 하며, 연속형(Continuous)이라면 **Regression tree** 라고 부릅니다.
 
-## 용어 정의
+# 용어 정의
 <a href="https://imgur.com/sZgYK1B"><img src="https://i.imgur.com/sZgYK1B.png" width="600px" height="400px" title="source: imgur.com" /></a>
 
 데이터가 k개의 변수와 하나의 결과인 $$D=(x_{1},...,x_{k},Y)$$와 같이 주어진다고 했을 때,
@@ -18,7 +18,7 @@ tag: DT
 5. 가지(branch): root-terminal 연결된 마디
 6. 깊이(depth): root-terminal 중간마디들의 수
 
-## Decision Tree의 형성
+# Decision Tree의 형성
 
 tree의 형성과정은 가지의 분리(Split Rule)-분리 정지(Stop Rule)-가지치기(Pruning)인 크게 세 부분으로 나누어 집니다. 어떠한 기준을 가지고 가지를 정지 조건에 도달할 때까지 분리한 후에 overfitting을 방지하기 위해서 필요없는 가지를 처내는 것 입니다. 이러한 일련의 과정을 해주는 다양한 알고리즘들이 있습니다. 그 중 몇 가지만 살펴보겠습니다.
 
@@ -32,7 +32,7 @@ tree의 형성과정은 가지의 분리(Split Rule)-분리 정지(Stop Rule)-�
 
 **Gini impurity** 는 CART알고리즘에서 사용되는 기준입니다. Gini impurity는 각 자식노드에서 계산된 후에 가중 평균 합을 해서 최종적으로 구해집니다. 기본적으로 Decision tree의 가지 분리 목적이 각 자식노드에 최대한 타겟 변수가 구분되게 분리시키는 것 입니다. 타겟 변수가 <1>, <2>로 두 가지 범주가 있다고 합시다. <1> 기준에서는 노드에 <1>만 있었으면 좋겠는데, <2>라는 불순도가 낀 것 입니다. 즉, $$p_{<2>}$$가 불순도인 셈이죠. 마찬가지로 <2>기준으로는 $$p_{<1>}$$이 불순도가 됩니다. 자기 빼고는 전부 불순도가 되는 것입니다. 그런데, 누구의 불순도가 더 신빙성있냐고 묻는 다면, <1>과 <2>의 비율을 고려해야 합니다. 왜냐하면 비율이 높은 쪽에 가중치를 더 높이주는 것이라고 생각하시면 됩니다. 만약 $$J$$개의 타겟 변수 범주가 있다면, 각 노드의 불순도는 그래서 아래와 같이 구해집니다.
 
-$$ I_{G}(p)=\sum_{i=1}^{J}p_{i}\sum_{k \neq i}p_{k}=\sum_{i=1}^{J} p_{i}(1-p_{i})=\sum_{i=1}^{J}(p_{i}-p_{i}^{2})=
+>$$ I_{G}(p)=\sum_{i=1}^{J}p_{i}\sum_{k \neq i}p_{k}=\sum_{i=1}^{J} p_{i}(1-p_{i})=\sum_{i=1}^{J}(p_{i}-p_{i}^{2})=
   \sum_{i=1}^{J}p_{i}-\sum_{i=1}^{J} p_{i}^{2}=1-\sum_{i=1}^{J} p_{i}^{2}$$
 
 따라서 실제로 계산할 때는 마지막처럼 $$1-\sum_{i=1}^{J} p_{i}^{2}$$로 간단하게 구할 수 있습니다. 예를 통해 계산해 봅시다.
@@ -47,13 +47,14 @@ $$ I_{G}(p)=\sum_{i=1}^{J}p_{i}\sum_{k \neq i}p_{k}=\sum_{i=1}^{J} p_{i}(1-p_{i}
 **Information gain** 은 C4.5, C5.0에서 사용되는 분리 기준으로 정보 이론에서의 **entropy** 를 기반으로 하는 분리 기준입니다. 먼저, $p_{1},...,p_{J}$를 각 클래스의
 확률이라고 한다면 이 때의 entropy는 아래와 같습니다:
 
-$$H(T)=I_{E}(p_{1},...,p_{J}) = - \sum_{i=1}^{J} p_{i} \log_{2} p_{i}$$
+>$$H(T)=I_{E}(p_{1},...,p_{J}) = - \sum_{i=1}^{J} p_{i} \log_{2} p_{i}$$
 
 여기서 Information gain은 원래의 부모 노드와 자식 노드들의 가중합 사이의 엔트로피의 차로써 구해진다, a를 분리 기준이라고 한다면,
 
-$$IG(T,a)\{Information \ Gain\} = H(T)\{Entropy(parent)\} - H(T|a)\{Entropy(Children)\}$$
+>$$IG(T,a)\{Information \ Gain\} = H(T)\{Entropy(parent)\} - H(T|a)\{Entropy(Children)\}$$
 
-사실 부모 노드의 entropy는 같으므로 $$H(T|a)$$가 작은 쪽을 선택하면 됩니다. 다시 말해 entropy를 최소화하는 분리 기준을 선택하면 된다는 말이죠. 위와 같은 예시로 entropy 계산을 해봅시다.
+사실 부모 노드의 entropy는 같으므로 $$H(T \lvert a)$$가 작은 쪽을 선택하면 됩니다.
+다시 말해 entropy를 최소화하는 분리 기준을 선택하면 된다는 말이죠. 위와 같은 예시로 entropy 계산을 해봅시다.
 
 <a href="https://imgur.com/dJ3g1te"><img src="https://i.imgur.com/dJ3g1te.png" width="600px" height="200px" title="source: imgur.com" /></a>
 
@@ -66,7 +67,7 @@ $$IG(T,a)\{Information \ Gain\} = H(T)\{Entropy(parent)\} - H(T|a)\{Entropy(Chil
 
 지니 불순도와 entropy 모두 작은 분리 기준을 선택하면 가장 낮아지는 변수-최적 분리점을 찾아서 그 기준으로 분리를 하면 됩니다. 범주형은 쉽게 계산되지만, 연속형 변수의 경우에는 몇 가지 과정이 필요합니다. 계산량이 너무 많기 때문이죠. 구체적으로 몇 가지 알고리즘을 살펴봅시다.
 
-## Decision Tree Learning Algorithm
+# Decision Tree Learning Algorithm
 
 ### CART(Classification And Regression Tree)
 
@@ -94,7 +95,7 @@ CART 알고리즘은 몇 가지 Stopping Rules들을 가지고 가지 분리를 
 
 CART는 Cost-Complexity Pruning이라는 방법으로 가지 치기를 합니다. 이 방법은 Cost-Complexity function을 최적화 시키는 나무를 찾아가는 것 입니다.
 
-$$Cost-Complexity \ function: \ R_{\alpha}(T)=R(T)+\alpha|f(T)|$$
+>$$Cost-Complexity \ function: \ R_{\alpha}(T)=R(T)+\alpha|f(T)|$$
 
 로 정의 되는데, 여기서 각각의 term의 의미는 아래와 같습니다.
 
@@ -111,7 +112,7 @@ $$Cost-Complexity \ function: \ R_{\alpha}(T)=R(T)+\alpha|f(T)|$$
 여기서 T에서 subtree $$T_{t}$$를 가지치기하는 경우를 생각해 봅시다. pruning하기 전후의 Cost-Complexity function을 비교해야 합니다: $$R_{\alpha}(T-T_{t})-R_{\alpha}(T)$$
 pruning 한 후와 그 전의 Cost-Complexity의 차이를 계산해 보면-그림을 보시면서 계산하면 식 이해가 편하십니다:)
 
-$$R_{\alpha}(T-T_{t})-R_{\alpha}(T)=R(T-T_{t})-R(T)+\alpha(|f(T-T_{t})|-f(T))=R(t)-R(T_{t})+\alpha(1-|f(T_{t})|)$$
+>$$R_{\alpha}(T-T_{t})-R_{\alpha}(T)=R(T-T_{t})-R(T)+\alpha(|f(T-T_{t})|-f(T))=R(t)-R(T_{t})+\alpha(1-|f(T_{t})|)$$
 
 $$R(t)-R(T_{t})+\alpha(1-|f(T_{t})|)>0$$이라면 즉, $$\alpha < \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$이라면 pruning 후의 Cost-Complexity가 더 높으므로 좋지 않고,
 $$R(t)-R(T_{t})+\alpha(1-|f(T_{t})|)<0$$이라면 즉, $$\alpha > \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$이라면 pruning 후의 Cost-Complexity가 낮으므로 좋습니다.
@@ -146,6 +147,7 @@ $$\alpha^{(1)}=0$$이라 하자.
 
 
 #### Iteration 2
+
 |   t    |   $$R(t)$$    | $$R(T_{t})$$  | $$g(t)$$ |
 | :-----:  | :-----: | :-----: | :-----: |
 | $$t_{1}$$  |  $$\frac{8}{16} \cdot \frac{16}{16}$$ |  $$\frac{2}{16}$$   | $$\frac{8/16-2/16}{3-1}=\frac{6}{32}$$ |
@@ -158,7 +160,7 @@ $$\alpha^{(1)}=0$$이라 하자.
 
 #### Iteration 3
 
-* $$\alpha^{(4)}=g(t_{1})=\frac{8/16-4/16}{2-1}=\frac{1}{4}$$
+* $$\alpha^{(4)}=g(t_{1})=\frac{8/16-4/16}{2-1}=\frac{1}{4}$$ 라고 둘 수 있습니다.
 
 
 #### Best $$\alpha$$값 찾기
@@ -169,8 +171,8 @@ $$\alpha^{(1)}=0$$이라 하자.
   - $$\alpha = 1/8$$, $$T_{2}$$가 best입니다.
   - $$1/8 < \alpha < 1/4/$$, $$T_{3}$$가 best입니다.
   - $$1/4 \leq \alpha$$, $$T_{3}$$가 best입니다.
-* 왜 위와 같은 결과가 나오냐면 $$0 \leq \alpha < 1/8$$라는 범위에서는 $$T_{t}=T_{t_{2}}$$이라고 할 때, $$\alpha \leq \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$가
-되고, $$T_{t}=T_{t_{1}}$$이라고 할 때, $$\alpha > \frac{R(t)-R(T_{t})}{|f(T_{t})|-1}$$이기 때문이다. 이 점에서 위와 같은 범위에서 $$T_{t_{1}}$$이 $$T_{t_{2}}$$보다 좋은 것은 명확하다. 마찬가지로 $$T_{t_{1}}$$이 $$T_{t_{3}}$$보다 더 좋은 것도 명확하다. 즉, 해당 T로 인한 $$g(t)$$의 최소값이 지정된 $$\alpha$$보다 커지면 좋은 가지치기라고 할 수 없다.
+* 왜 위와 같은 결과가 나오냐면 $$0 \leq \alpha < 1/8$$라는 범위에서는 $$T_{t}=T_{t_{2}}$$이라고 할 때, $$\alpha \leq \frac{R(t)-R(T_{t})}{\lvert f(T_{t})\rvert-1}$$가
+되고, $$T_{t}=T_{t_{1}}$$이라고 할 때, $$\alpha > \frac{R(t)-R(T_{t})}{\lvert f(T_{t}) \rvert-1}$$이기 때문이다. 이 점에서 위와 같은 범위에서 $$T_{t_{1}}$$이 $$T_{t_{2}}$$보다 좋은 것은 명확하다. 마찬가지로 $$T_{t_{1}}$$이 $$T_{t_{3}}$$보다 더 좋은 것도 명확하다. 즉, 해당 T로 인한 $$g(t)$$의 최소값이 지정된 $$\alpha$$보다 커지면 좋은 가지치기라고 할 수 없다.
 
 ### C4.5 & C5.0
 
@@ -207,7 +209,8 @@ prp(model.2, type=2, extra=2, digits=3)
 
 model.2$cptable # 알파 값 조정
 
-prune_model.2 <- prune(model.2, cp=model.2$cptable[which.min(model.2$cptable[,"xerror"])], "CP")
+prune_model.2 <- prune(model.2,
+  cp=model.2$cptable[which.min(model.2$cptable[,"xerror"])], "CP")
 prp(prune_model.2, type=4,extra=2,digits=3)
 
 pred <- predict(prune_model.2, iris[,-5], type="class")
