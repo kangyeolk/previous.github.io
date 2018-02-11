@@ -1,6 +1,8 @@
 - post: decision_tree
   related:
-  - KNN
-  - RF
-- post: K-means
-- post: KNN
+  - Random_Forest
+- post: NBC
+  related:
+  - KDE
+  - discrete distribution
+  - continuous_distribution
