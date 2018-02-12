@@ -184,7 +184,7 @@ Binomial Confidence Limit 사용한다. 다음에..
 ## Code
 
 R로 간단하게 Algorithm을 시행해 보았습니다.
-```{r}
+```r
 ## CART Algorithm
 library(rpart)
 data(iris)
@@ -216,7 +216,7 @@ pred <- predict(prune_model.2, iris[,-5], type="class")
 confusionMatrix(prune_model.2, iris[,5])
 ```
 
-```{r}
+```r
 ## C5.0 Algorithm
 library(C50)
 data(iris)
