@@ -4,4 +4,4 @@ category: Basic Machine Learning Algorithm
 tag: Bagging
 ---
 
-Random forest입니다.
+곧 작성하겠습니다.
