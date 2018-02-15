@@ -1,7 +1,7 @@
 ---
 title: DT를 이용한 Bagging = Random Forest
 category: Basic Machine Learning Algorithm
-tag: Bagging
+tag: Random Forest
 ---
 
-곧 작성하겠습니다.
+Machine Learning 모델들은 많은 현실적인 문제들을 훌륭하게 해결하고 있지만, 그렇지 않은 분야도 무수히 많이 존재합니다. Machine Learning 모델들이 흔히 마주하는 문제는 모델이 overfitting 되거나 underfitting되는 문제입니다. 이 중
