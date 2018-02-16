@@ -102,7 +102,7 @@ $$d_{ij}$$을 두 node $$i$$ 와 $$j$$ 사이의 최단거리라고 하자.
 
 이는 node $$i$$로부터 다른 node 사이의 최단거리의 산술평균의 역수 개념이다. 즉, 평균 거리가 짧을수록 근접 중심성은 커진다. 하지만 이러한 정의는 하나라도 두 node 사이의 경로가 존재하지 않는다면 0이 되어 버린다.($$d_{ij}=\infty$$이므로) 따라서 이를 보완한 두 번째 정의로 보통 많이 사용된다.
 
-> **(DEFINITION II)** node $$i$$의 근접 중심성 : $$C(i) = \frac{1}{n-1}\sum_{j \neq i} 1/d_{ij}}$$
+> **(DEFINITION II)** node $$i$$의 근접 중심성 : $$C(i) = \frac{1}{n-1}\sum_{j \neq i} 1/d_{ij}$$
 
 이는 node $$i$$로부터 다른 node 사이의 최단거리의 조화평균의 역수 개념이다. 이를 사용하면 $$d_{ij}=\infty$$이여도 하나의 요소만 0으로 되는 것으로 끝난다. $$1/d_{ij}$$의 의미는 둘 사이의 유사도를 의미하므로 이는 다른 node들에 대한 평균적인 유사도이다. 예를 들어 두 번째 정의로 $$M1$$의 근접 중심성을 구해보자.
 
@@ -112,7 +112,7 @@ $$d_{ij}$$을 두 node $$i$$ 와 $$j$$ 사이의 최단거리라고 하자.
 
 중개 중심성은 말 그대로 두 node 사이의 경로 중에 해당 node를 지나가는지 여부 즉, **해당 node가 두 node를 중개하는지 여부** 로 구한다. $$g_{ij}$$를 $$i$$에서 $$j$$로 가는 최단경로의 수, $$g_{ivj}$$는 그 중에서 $$v$$를 거치는 경로의 수라고 하자.
 
-> **(DEFINITION)** node v의 중개 중심성 : C_{B}(v)= \sum_{i \neq v} \sum_{j \neq v,i} \frac{g_{ivj}}{g_{ij}}
+> **(DEFINITION)** node v의 중개 중심성 : $$C_{B}(v)= \sum_{i \neq v} \sum_{j \neq v,i} \frac{g_{ivj}}{g_{ij}}$$
 
 <center><a href="https://imgur.com/r61HEKU"><img src="https://i.imgur.com/r61HEKU.png" width="300px" height="300px" title="source: imgur.com" /></a></center>
 
