@@ -130,7 +130,7 @@ coef_matrix_ridge
 coef_matrix_lasso
 ```
 
-<center><a href="https://imgur.com/CcOSI4J"><img src="https://i.imgur.com/CcOSI4J.png" width="300px" height="100px" title="source: imgur.com" /></a></center>
-<center><a href="https://imgur.com/WlWQE0B"><img src="https://i.imgur.com/WlWQE0B.png" width="300px" height="100px" title="source: imgur.com" /></a></center>
+<center><a href="https://imgur.com/CcOSI4J"><img src="https://i.imgur.com/CcOSI4J.png" width="600px" height="200px" title="source: imgur.com" /></a></center>
+<center><a href="https://imgur.com/WlWQE0B"><img src="https://i.imgur.com/WlWQE0B.png" width="600px" height="200px" title="source: imgur.com" /></a></center>
 
 위쪽 계수가 Ridge이고 아래쪽 계수가 Lasso입니다. 확실히 Ridge는 0이 되는 계수가 없지만, Lasso는 많은 계수를 0으로 만드는 것을 볼 수 있습니다.

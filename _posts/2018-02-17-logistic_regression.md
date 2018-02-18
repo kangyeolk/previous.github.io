@@ -10,7 +10,7 @@ tag: Regression
 
 <center><a href="https://imgur.com/gUmxjpM"><img src="https://i.imgur.com/gUmxjpM.png" width="400px" height="400px" title="source: imgur.com" /></a></center>
 
-만약 종속변수가 이산형이라면 먼저 생각할 수 있는 것은 이것을 연속형으로 바꾸어 주자는 생각입니다. 종속변수가 binary한 상황에서 $$p(Y=0|X), p(Y=1|X)$$을 구하고 그 중 $$p(Y=1|X)$$를 종속변수로 사용할 수 있습니다. 이는 분명히 연속형 변수이긴 하지만 범위가 $$[0,1]$$이므로 범위를 바꿔줄 필요가 있습니다. 이 때 **실패확률 대비 성공확률** 인 **$$Odds=\frac{p(Y=1 \lvert X)}{1-p(Y=1 \lvert X)}$$** 를 생각해 볼 수 있습니다. 하지만 이 역시 범위가 $$[0, \infty]$$이므로 여기에 log를 씌워서 **logit** 이라는 binary한 종속변수에서 변형한 것으로 종속변수로 사용하게 됩니다. 이렇게 된다면 종속변수가 연속형 변수가 됨은 물론 범위가 $$[-\infty, \infty]$$이기 때문에 문제 없이 회귀적합을 할 수 있습니다. 이것을 **Logistic Regression** 이라고 합니다.
+만약 종속변수가 이산형이라면 먼저 생각할 수 있는 것은 이것을 연속형으로 바꾸어 주자는 생각입니다. 종속변수가 binary한 상황에서 $$p(Y=0 \lvert X), p(Y=1 \lvert X)$$을 구하고 그 중 $$p(Y=1 \lvert X)$$를 종속변수로 사용할 수 있습니다. 이는 분명히 연속형 변수이긴 하지만 범위가 $$[0,1]$$이므로 범위를 바꿔줄 필요가 있습니다. 이 때 **실패확률 대비 성공확률** 인 **$$Odds=\frac{p(Y=1 \lvert X)}{1-p(Y=1 \lvert X)}$$** 를 생각해 볼 수 있습니다. 하지만 이 역시 범위가 $$[0, \infty]$$이므로 여기에 log를 씌워서 **logit** 이라는 binary한 종속변수에서 변형한 것으로 종속변수로 사용하게 됩니다. 이렇게 된다면 종속변수가 연속형 변수가 됨은 물론 범위가 $$[-\infty, \infty]$$이기 때문에 문제 없이 회귀적합을 할 수 있습니다. 이것을 **Logistic Regression** 이라고 합니다.
 
 > $$\log \Big(\frac{p(Y=1|X)}{1-p(Y=1|X)} \Big) = X \beta$$
 
