@@ -10,17 +10,17 @@ tag: Regression
 
 <center><a href="https://imgur.com/gUmxjpM"><img src="https://i.imgur.com/gUmxjpM.png" width="400px" height="400px" title="source: imgur.com" /></a></center>
 
-만약 종속변수가 이산형이라면 먼저 생각할 수 있는 것은 이것을 연속형으로 바꾸어 주자는 생각입니다. 종속변수가 binary한 상황에서 $$p(Y=0|X), p(Y=1|X)$$을 구하고 그 중 $$p(Y=1|X)$$를 종속변수로 사용할 수 있습니다. 이는 분명히 연속형 변수이긴 하지만 범위가 $$[0,1]$$이므로 범위를 바꿔줄 필요가 있습니다. 이 때 **실패확률 대비 성공확률** 인 **$$Odds=\frac{p(Y=1|X)}{1-p(Y=1|X)}$$** 를 생각해 볼 수 있습니다. 하지만 이 역시 범위가 $$[0, \infty]$$이므로 여기에 log를 씌워서 **logit** 이라는 binary한 종속변수에서 변형한 것으로 종속변수로 사용하게 됩니다. 이렇게 된다면 종속변수가 연속형 변수가 됨은 물론 범위가 $$[-\infty, \infty]$$이기 때문에 문제 없이 회귀적합을 할 수 있습니다. 이것을 **Logistic Regression** 이라고 합니다.
+만약 종속변수가 이산형이라면 먼저 생각할 수 있는 것은 이것을 연속형으로 바꾸어 주자는 생각입니다. 종속변수가 binary한 상황에서 $$p(Y=0|X), p(Y=1|X)$$을 구하고 그 중 $$p(Y=1|X)$$를 종속변수로 사용할 수 있습니다. 이는 분명히 연속형 변수이긴 하지만 범위가 $$[0,1]$$이므로 범위를 바꿔줄 필요가 있습니다. 이 때 **실패확률 대비 성공확률** 인 **$$Odds=\frac{p(Y=1 \lvert X)}{1-p(Y=1 \lvert X)}$$** 를 생각해 볼 수 있습니다. 하지만 이 역시 범위가 $$[0, \infty]$$이므로 여기에 log를 씌워서 **logit** 이라는 binary한 종속변수에서 변형한 것으로 종속변수로 사용하게 됩니다. 이렇게 된다면 종속변수가 연속형 변수가 됨은 물론 범위가 $$[-\infty, \infty]$$이기 때문에 문제 없이 회귀적합을 할 수 있습니다. 이것을 **Logistic Regression** 이라고 합니다.
 
 > $$\log \Big(\frac{p(Y=1|X)}{1-p(Y=1|X)} \Big) = X \beta$$
 
 ## $$\beta$$에 대한 추정 및 해석
 
-한편 위의 식을 변형하면 $$p(Y=1|X)=\frac{e^{X \beta}}{1+e^{X \beta}}$$ 라는 것을 알 수 있습니다. 우변 같은 꼴을하고 있는 $$f(x)$$를 **Logistic function(Sigmoid function)** 이라고 부릅니다. 아래는 표준 logistic function (출처:wikipedia)
+한편 위의 식을 변형하면 $$p(Y=1 \lvert X)=\frac{e^{X \beta}}{1+e^{X \beta}}$$ 라는 것을 알 수 있습니다. 우변 같은 꼴을하고 있는 $$f(x)$$를 **Logistic function(Sigmoid function)** 이라고 부릅니다. 아래는 표준 logistic function (출처:wikipedia)
 
 <center><a href="https://imgur.com/tEpmk00"><img src="https://i.imgur.com/tEpmk00.png" width="400px" height="400px" title="source: imgur.com" /></a></center>
 
-그리고 $$\frac{e^{X_{i} \beta}}{1+e^{X_{i} \beta}} = p_{i}$$라고 한다면 데이터 하나에 대한 식은 $$p_{i}^{y_{i}}(1-p_{i})^{1-y_{i}}$$ 꼴로 나타낼 수 있습니다. $$n$$개의 데이터가 주어졌을 때, $$\beta$$에 대한 추정은 데이터 전체에 대한 likelihood $$\prod_{i=1}^{n} p_{i}^{y_{i}}(1-p_{i})^{1-y_{i}}$$를 통해 Maximum likelihood estimation을 구하는 식으로 됩니다. 하지만, 이 likelihood에서 MLE가 수식적으로 구해지지 않으므로 gradient descent 방법과 같이 점진적인 방법을 통해서 이를 구해야 합니다. 그렇기 때문에 때론 $$\beta$$값이 수렴하지 않기도 합니다. 수렴하지 않는 원인 중 하나는 예측변수들 사이의 다중공선성(multicolinearity)인데(사실 선형회귀에서도 다중공선성 문제가 있다면 회귀계수가 제대로 구해지지 않기도 합니다.), 이를 해소하기 위해서는 Ridge Regression이나 Lasso Regression처럼 regularization method를 도입해서 해결을 할 수 있습니다. 이에 대해서는 다른 포스팅에서 다루겠습니다.
+그리고 $$\frac{e^{X_{i} \beta}}{1+e^{X_{i} \beta}} = p_{i}$$라고 한다면 데이터 하나에 대한 식은 $$p_{i}^{y_{i}}(1-p_{i})^{1-y_{i}}$$ 꼴로 나타낼 수 있습니다. $$n$$개의 데이터가 주어졌을 때, $$\beta$$에 대한 추정은 데이터 전체에 대한 likelihood $$\prod_{i=1}^{n} p_{i}^{y_{i}}(1-p_{i})^{1-y_{i}}$$를 통해 Maximum likelihood estimation을 구하는 식으로 됩니다. 하지만, 이 likelihood에서 MLE가 수식적으로 구해지지 않으므로 gradient descent 방법과 같이 점진적인 방법을 통해서 이를 구해야 합니다. 그렇기 때문에 때론 $$\beta$$값이 수렴하지 않기도 합니다. 수렴하지 않는 원인 중 하나는 설명변수들 사이의 다중공선성(multicolinearity)인데(사실 선형회귀에서도 다중공선성 문제가 있다면 회귀계수가 제대로 구해지지 않기도 합니다.), 이를 해소하기 위해서는 Ridge Regression이나 Lasso Regression처럼 regularization method를 도입해서 해결을 할 수 있습니다. 이에 대해서는 다른 포스팅에서 다루겠습니다.
 
 또한 $$\beta$$를 해석함에 있어서 회귀분석에서 X의 변화에 따른 Y의 변화량으로 해석하는 것처럼 로지스틱 회귀분석에서는 X의 변화에 따른 Y의 logit의 변화 입니다. 정확히는 X가 한 단위 증가하면, y의 logit이 $$\beta$$만큼 증가합니다.
 
@@ -98,4 +98,4 @@ pred = LR_model2.predict(X_test)
 print(metrics.classification_report(pred, y_test))
 ```
 
-<center><a href="https://imgur.com/zBZ8mG1"><img src="https://i.imgur.com/zBZ8mG1.png" width="500px" height="500px" title="source: imgur.com" /></a></center>
+<center><a href="https://imgur.com/zBZ8mG1"><img src="https://i.imgur.com/zBZ8mG1.png" width="500px" height="300px" title="source: imgur.com" /></a></center>
