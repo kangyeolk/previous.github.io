@@ -1,6 +1,7 @@
 - post: decision_tree
   related:
-  - Random_Forest
+  - RF
+  - esb
 - post: NBC
   related:
   - KDE
